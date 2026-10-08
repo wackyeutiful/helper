@@ -22,8 +22,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
+      - name: Setup Gradle 9.7.1
         uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '9.7.1'
 
       - name: Build Backend JAR
         run: gradle build -x test
