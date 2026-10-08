@@ -1,0 +1,64 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <a routerLink="/" class="back-link">← Retour à l'accueil</a>
+    <h1 class="brand">🚢 HELPER</h1>
+  </div>
+
+  <!-- STATISTIQUES -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total</div>
+      <div class="stat-value blue">{{ assets.length }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Disponibles</div>
+      <div class="stat-value green">{{ availableCount }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">En intervention</div>
+      <div class="stat-value orange">{{ onMissionCount }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Maintenance</div>
+      <div class="stat-value red">{{ maintenanceCount }}</div>
+    </div>
+  </div>
+
+  <!-- CARTE INTERACTIVE -->
+  <div class="map-section">
+    <h2 class="section-title">🗺️ Localisation des moyens</h2>
+    <app-map [assets]="assets"></app-map>
+  </div>
+
+  <!-- LISTE DES MOYENS -->
+  <h2 class="section-title">📋 Moyens disponibles</h2>
+
+  <div class="cards-grid">
+    <div *ngFor="let asset of assets" class="asset-card">
+      <div class="card-header">{{ asset.name }}</div>
+      <div class="card-body">
+        <p><span class="label">Type :</span> {{ asset.type }}</p>
+        <p><span class="label">Position :</span> <span class="mono">{{ asset.location?.join(', ') }}</span></p>
+        <p>
+          <span class="label">Statut :</span>
+          <span class="badge"
+            [style.background]="asset.status === 'AVAILABLE' ? '#00a86b' : asset.status === 'ON_MISSION' ? '#ff8c00' : '#dc3545'">
+            {{ asset.status }}
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="assets.length === 0" class="empty-state">
+      🚢 Aucun moyen enregistré.
+      <br>
+      <a routerLink="/add" class="btn-link">➕ Ajouter un moyen</a>
+    </div>
+  </div>
+
+  <!-- BOUTON RETOUR -->
+  <div class="footer-actions">
+    <a routerLink="/" class="btn-back">← Retour à l'accueil</a>
+  </div>
+</div>

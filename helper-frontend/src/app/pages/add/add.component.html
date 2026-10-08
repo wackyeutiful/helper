@@ -1,0 +1,46 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <a routerLink="/" class="back-link">← Retour</a>
+    <h2>⛴️ Ajouter un Moyen</h2>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-group">
+      <label>Nom</label>
+      <input [(ngModel)]="newAsset.name" placeholder="Ex: Remorqueur Marseille" />
+    </div>
+
+    <div class="form-group">
+      <label>Type</label>
+      <select [(ngModel)]="newAsset.type">
+        <option value="REMORQUEUR">⛴️ Remorqueur</option>
+        <option value="SEMI_RIGIDE">🚤 Semi-rigide</option>
+        <option value="PLONGEUR">🤿 Plongeur</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Statut</label>
+      <select [(ngModel)]="newAsset.status">
+        <option value="AVAILABLE">✅ Disponible</option>
+        <option value="ON_MISSION">🔄 En intervention</option>
+        <option value="MAINTENANCE">🔧 Maintenance</option>
+      </select>
+    </div>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Longitude</label>
+        <input type="number" [(ngModel)]="newAsset.longitude" placeholder="5.92" />
+      </div>
+      <div class="form-group">
+        <label>Latitude</label>
+        <input type="number" [(ngModel)]="newAsset.latitude" placeholder="43.12" />
+      </div>
+    </div>
+
+    <button class="btn-submit" (click)="addAsset()">⚓ Ajouter le Moyen</button>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="page-container">
+
+  <div class="page-header">
+    <a routerLink="/" class="back-link">← Retour</a>
+    <h2>🚨 Nouvelle Intervention</h2>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-group">
+      <label>Navire en détresse *</label>
+      <input [(ngModel)]="newIntervention.vesselName" placeholder="Ex: CMA CGM Togo" />
+    </div>
+
+    <div class="form-group">
+      <label>Description de l'incident</label>
+      <textarea [(ngModel)]="newIntervention.description" placeholder="Ex: Panne moteur, dérive à 15km au large..." rows="4"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Criticité</label>
+      <select [(ngModel)]="newIntervention.severity">
+        <option value="CRITICAL">🔴 Critique</option>
+        <option value="HIGH">🟠 Élevée</option>
+        <option value="MEDIUM">🟡 Moyenne</option>
+        <option value="LOW">🟢 Faible</option>
+      </select>
+    </div>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Longitude</label>
+        <input type="number" [(ngModel)]="newIntervention.longitude" placeholder="5.92" />
+      </div>
+      <div class="form-group">
+        <label>Latitude</label>
+        <input type="number" [(ngModel)]="newIntervention.latitude" placeholder="43.12" />
+      </div>
+    </div>
+
+    <button class="btn-submit" (click)="addIntervention()">🚨 Déclencher l'Intervention</button>
+  </div>
+</div>

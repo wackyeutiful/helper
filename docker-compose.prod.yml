@@ -1,0 +1,62 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: helper_mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: helper
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - helper-network
+
+  backend:
+    image: ghcr.io/wackyeutiful/helper/backend:latest
+    container_name: helper_backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URI=mongodb://admin:${MONGO_PASSWORD:-password}@mongodb:27017/helper?authSource=admin
+    depends_on:
+      - mongodb
+      - ai-service
+    networks:
+      - helper-network
+
+  frontend:
+    image: ghcr.io/wackyeutiful/helper/frontend:latest
+    container_name: helper_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - helper-network
+
+  ai-service:
+    image: ghcr.io/wackyeutiful/helper/ai-service:latest
+    container_name: helper_ai
+    restart: always
+    networks:
+      - helper-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: helper_ollama
+    restart: always
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - helper-network
+    command: serve
+
+volumes:
+  mongo_data:
+  ollama_data:
+
+networks:
+  helper-network:

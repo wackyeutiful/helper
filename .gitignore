@@ -1,0 +1,30 @@
+# === JAVA / GRADLE ===
+build/
+.gradle/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+bin/
+out/
+
+# === NODE / ANGULAR ===
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+
+# === IDE ===
+.idea/
+.vscode/
+*.iml
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === ENV ===
+.env
+.env.local
+
+# === LOGS ===
+*.log

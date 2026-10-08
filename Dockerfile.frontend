@@ -1,0 +1,14 @@
+# Étape 1 : Build Angular (Node.js 22 requis par Angular 22)
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY helper-frontend/package*.json ./
+RUN npm install
+COPY helper-frontend/ .
+RUN npm run build --configuration=production
+
+# Étape 2 : Serveur Nginx
+FROM nginx:alpine
+COPY --from=build /app/dist/helper-frontend/browser /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

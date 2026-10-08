@@ -1,0 +1,76 @@
+<div class="app-root">
+
+  <div class="main-content">
+
+    <!-- TITRE -->
+    <div class="hero">
+      <h1 class="title">HELPER</h1>
+      <p class="subtitle">Marine Intervention Manager</p>
+    </div>
+
+    <!-- BOUTONS -->
+    <div class="actions">
+      <a routerLink="/add-intervention" class="btn btn-primary">🚨 Intervention</a>
+      <a routerLink="/add" class="btn btn-outline">⛴️ Ajouter un moyen</a>
+      <a routerLink="/dashboard" class="btn btn-outline">📊 Dashboard</a>
+    </div>
+
+    <!-- INTERVENTIONS RÉCENTES -->
+    <div class="interventions-section">
+      <h2 class="section-title">🚨 Dernières interventions</h2>
+
+      <div class="interventions-grid">
+
+        <div *ngFor="let intervention of interventions" class="card">
+          <div class="card-title">{{ intervention.vesselName || 'Navire inconnu' }}</div>
+          <div class="card-desc">{{ intervention.description || 'Aucune description' }}</div>
+          <div class="card-tags">
+            <span class="tag-status">{{ intervention.status || 'PENDING' }}</span>
+            <span *ngIf="intervention.classificationType && intervention.classificationType !== 'AUTRE'" class="badge-ai">
+              🧠 {{ intervention.classificationType }}
+            </span>
+            <span *ngIf="intervention.etaFormatted && intervention.etaFormatted !== '0min'" class="badge-eta">
+              🕒 {{ intervention.etaFormatted }}
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="interventions.length === 0" class="empty-state">
+          Aucune intervention enregistrée.
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>© 2026 — Open Source</p>
+    </div>
+  </div>
+
+  <!-- CHATBOT -->
+  <div class="chat-widget">
+    <button class="chat-button" (click)="toggleChat()">💬</button>
+
+    <div *ngIf="isChatOpen" class="chat-window">
+      <div class="chat-header">
+        <span>🤖 Assistant HELPER</span>
+        <span (click)="toggleChat()" class="chat-close">&times;</span>
+      </div>
+
+      <div class="chat-messages">
+        <div *ngFor="let msg of chatMessages" class="message" [class.user]="msg.sender === 'user'" [class.bot]="msg.sender === 'assistant'">
+          {{ msg.text }}
+        </div>
+        <div *ngIf="isChatLoading" class="message bot">En train d'écrire...</div>
+        <div *ngIf="chatMessages.length === 0 && !isChatLoading" class="chat-placeholder">
+          Posez une question sur la maritime (échouement, panne, procédures...).
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <input type="text" [(ngModel)]="userMessage" (keyup.enter)="sendMessage()" placeholder="Écrivez votre question..." />
+        <button (click)="sendMessage()">Envoyer</button>
+      </div>
+    </div>
+  </div>
+
+</div>
